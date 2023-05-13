@@ -1,0 +1,21 @@
+name: Crear y eliminar archivos
+
+on:
+  push:
+    branches:
+      - main  # Cambia esto al nombre de la rama en la que deseas activar el flujo de trabajo
+
+jobs:
+  create-delete-file:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Crear archivo
+      run: |
+        echo "Contenido del archivo" > nuevo-archivo.txt
+        git add nuevo-archivo.txt
+        git config user.name "GitHub Actions"
+        git config user.email "actions@github.com"
+        git commit -m "Crear nuevo-archivo.txt"
+        git push
+        

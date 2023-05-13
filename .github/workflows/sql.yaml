@@ -1,0 +1,24 @@
+name: Insertar registros en MySQL
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  insert-records:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Configurar entorno MySQL
+      uses: docker/setup-mysql@v1
+      with:
+        mysql-version: '8.0'
+        mysql-root-password: ${{ secrets.MYSQL_ROOT_PASSWORD }}
+    
+    - name: Clonar el repositorio
+      uses: actions/checkout@v2
+    
+    - name: Insertar registros en la base de datos
+      run: |
+        mysql -h localhost -u root -p"${{ secrets.MYSQL_ROOT_PASSWORD }}" -e "USE nombre_base_de_datos; INSERT INTO nombre_tabla (campo1, campo2, campo3) VALUES ('valor1', 'valor2', 'valor3'); INSERT INTO nombre_tabla (campo1, campo2, campo3) VALUES ('valor4', 'valor5', 'valor6'); INSERT INTO nombre_tabla (campo1, campo2, campo3) VALUES ('valor7', 'valor8', 'valor9');"
